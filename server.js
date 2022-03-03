@@ -27,7 +27,6 @@ app.use(function (req, res, next) {
     });
 });
 
-
 const MongoClient = require('mongodb').MongoClient;
 
 //SELECT DATABASE
