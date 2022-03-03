@@ -172,6 +172,15 @@
                     },
                 cart: []
             },
+            created: function() {
+                fetch('https://cst3145-cw2-an942.herokuapp.com/collection/products').then(
+                    function (response) {
+                        response.json().then(
+                            function (json) {
+                                store.products = json;
+                            });
+                    })
+            },
             methods: {
                 addToCart(product){
                     this.cart.push(product.id);
