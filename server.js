@@ -51,4 +51,14 @@ app.get('/collection/:collectionName', (req, res) => {
         res.send(results)
     })
 })
+//RETIREVE AN OBJECT BY MONGODB ID
+const ObjectID = require('mongodb').ObjectId;
+app.get('/collection/:collectionName/:id', (req, res, next) => {
+    req.collection.findOne(
+        { _id: new ObjectID(req.params.id) },
+        (error, result) => {
+            if (error) return next(error)
+            res.send(result)
+        })
+})
 
