@@ -61,4 +61,11 @@ app.get('/collection/:collectionName/:id', (req, res, next) => {
             res.send(result)
         })
 })
+//ADD AN OBJECT
+app.post('/collection/:collectionName', (req, res, next) => {
+    req.collection.insertOne(req.body, (error, results) => {
+        if (error) return next(error)
+        res.send(results.ops)
+    })
+})
 
