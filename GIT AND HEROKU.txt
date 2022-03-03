@@ -1,3 +1,4 @@
 REPOSITORY: https://github.com/Ra1nyyy/CST3145-CW2.git
-GITHUB PAGE: https://ra1nyyy.github.io/CST3145-CW2/
+GITHUB PAGE 1: https://ra1nyyy.github.io/CST3145-CW1/
+GITHUB PAGE 2: https://ra1nyyy.github.io/CST3145-CW2/
 HEROKU - https://cst3145-cw2-an942.herokuapp.com/
