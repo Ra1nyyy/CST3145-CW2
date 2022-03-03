@@ -40,3 +40,15 @@ app.param('collectionName', (req, res, next, collectionName) => {
     req.collection = db.collection(collectionName)
     return next()
 })
+//DISPLAY A MESSAGE FOR ROOT PATH TO SHOW THAT API IS WORKING
+app.get('/', (req, res, next) => {
+    res.send('Welcome to the MongoDB Express server.')
+})
+//RETRIEVE ALL THE OBJECTS FROM A COLLECTION
+app.get('/collection/:collectionName', (req, res) => {
+    req.collection.find({}).toArray((error, results) => {
+        if (error) return next(error)
+        res.send(results)
+    })
+})
+
