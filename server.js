@@ -28,3 +28,10 @@ app.use (cors())
 // });
 
 
+const MongoClient = require('mongodb').MongoClient;
+
+//SELECT DATABASE
+let db;
+MongoClient.connect('mongodb+srv://MyMongoDBUser:December03@gettingstarted.ubxjj.mongodb.net/', (err, client) => {
+    db = client.db('webstore')
+})
