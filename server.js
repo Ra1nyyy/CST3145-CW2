@@ -68,4 +68,27 @@ app.post('/collection/:collectionName', (req, res, next) => {
         res.send(results.ops)
     })
 })
+//UPDATE AN OBJECT BY ID
+app.put('/collection/:collectionName/:id', (req, res, next) => {
+    req.collection.updateOne(
+        {_id: new ObjectID(req.params.id)},
+        {$set: req.body},
+        {safe: true, multi: false},
+        (error, result) => {
+            if (error) return next(error)
+            res.send((result.result.n === 1) ?
+                {msg: 'success'} : { msg: 'error'})
+        })
+})
+//DELETE AN OBJECT BY ID
+app.delete('/collection/:collectionName/:id', (req, res, next) => {
+    req.collection.deleteOne(
+        {_id: ObjectID(req.params.id)},
+        (error, result) => {
+            if (error) return next(error)
+            res.send((result.result.n === 1) ?
+                {msg: 'success'} : {msg: 'error'})
+        })
+})
 
+app.listen(3000)
