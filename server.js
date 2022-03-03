@@ -35,3 +35,8 @@ let db;
 MongoClient.connect('mongodb+srv://MyMongoDBUser:December03@gettingstarted.ubxjj.mongodb.net/', (err, client) => {
     db = client.db('webstore')
 })
+//SELECT COLLECTION
+app.param('collectionName', (req, res, next, collectionName) => {
+    req.collection = db.collection(collectionName)
+    return next()
+})
