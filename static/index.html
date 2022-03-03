@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Individual Coursework 1</title>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="products.js"></script>
+    <link rel="stylesheet" href="vue.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+</head>
+<body>
+    <!-- MAIN DIV-->
+    <div id="app">
+        <header>
+            <h1 v-html='sitename'></h1>
+            <!-- CHECKOUT BUTTON -->
+            <div class="checkoutbut">
+                <button @click='showCheckout'>
+                    {{cartItemCount}}
+                    <span class="fas fa-cart-plus"></span>Checkout
+                </button>
+            </div>
+            <br>
+
+        </header>
+        <main>
+            
+            <!-- PRODUCT PAGE-->
+            <div v-if='showProduct'>
+                <!-- SORT BUTTON -->
+                <div class="sort">
+                    <p>Sort by:
+                        <button @click="sortedPriceHigh">Price: High to Low</button>
+                        <button @click="sortedPriceLow">Price: Low to High</button>
+                        <button @click="sortedRatingsHigh">Avg. Customer Review</button>
+                    </p>
+                </div>
+                <input type="text" v-model="search" id="search" placeholder="Search..">
+                <div v-for="product in filteredProducts" target="_blank">
+                    <div  class="product">
+                        <figure>
+                            <img v-bind:src='product.image' width="200" height="200">
+                        </figure>
+                        <h2 v-html='product.subject'></h2>
+                        <p v-text='product.location'></p>
+                        <p>Price: {{product.price}}</p>
+                        <p>Available Space: {{product.availableInventory}}</p>
+                        <!-- ADD TO CART BUTTON -->
+                        <button @click="addToCart(product)" v-if="canAddToCart(product)">Add to cart</button> 
+                        <button disabled='disable' v-else>Add to cart</button>
+                        <span v-if = "itemLeft(product) === 0">
+                            All out!
+                        </span>
+                        <span v-else-if = "itemLeft(product) < 5">
+                            Only {{itemLeft(product)}} left!
+                        </span>
+                        <span v-else>Buy now!</span>
+                        <!-- RATINGS -->
+                        <div>
+                            <span v-for='n in product.rating'>★</span>
+                            <span v-for='n in 5-product.rating'>✰</span>
+                        </div>
+                    </div>
+             </div>
+            </div>
+            <!-- CHECKOUT PAGE -->
+            <div v-else>
+                <div class="checkout">
+                    <h2>Checkout</h2>
+                    <p>
+                        <strong>First Name:</strong>
+                        <input type="text" v-on:keypress="LettersOnly($event)" v-model.trim="order.firstName" placeholder="Enter first name.."/>
+                    </p>
+                    <p>
+                        <strong>Last Name:</strong>
+                        <input type="text" v-on:keypress="LettersOnly($event)" v-model.trim="order.lastName" placeholder="Enter last name.."/>
+                    </p>
+                    <p>
+                        <strong>Address:</strong>
+                        <input v-model="order.address" placeholder="Enter address.."/>
+                    </p>
+                    <p>
+                        <strong>Phone:</strong>
+                        <input type="text" v-on:keypress="NumbersOnly" v-model="order.phone" placeholder="Enter phone number.."/>
+                    </p>
+                    <p>
+                        <strong>City:</strong>
+                        <input v-model="order.city" placeholder="Enter city.."/>
+                    </p>
+                    <p>
+                        <strong>State:</strong>
+                        <select v-model="order.state" class="form-control" style="height: 30px; width: 100px;">
+                            <option disabled value="">State</option>
+                            <option v-for="(state, key) in states"
+                                v-bind:value="state">
+                                {{key}}
+                            </option>
+                        </select>
+                    </p>
+                    <p>
+                        <input type="checkbox" id="gift" value="true" v-model="order.gift" v-bind:true-value="order.sendGift" v-bind:false-value="order.dontSendGift">
+                        <label for="gift">Ship As Gift?</label>
+                    </p>
+                    <p>
+                        <input type="radio" id="home" value="Home" v-model="order.method">
+                        <label for="home">Home</label>
+                        <input type="radio" id="business" value="Business" v-model="order.method">
+                        <label for="business">Business</label>
+                    </p>
+                    <!-- SUBMIT BUTTON -->
+                    <button @click="submitForm" id="orderbut">Place Order</button>
+                    <p>
+                        <strong>Zip/Postal Code:</strong> <input v-model.number="order.zip" type="text" placeholder="Enter postcode.."/>
+                    </p>
+                </div>
+                <!-- ORDER INFORMATION -->
+                <div class="order">
+                    <h2>Order Information</h2>
+                    <p>First Name: {{order.firstName}}</p>
+                    <p>Last Name: {{order.lastName}}</p>
+                    <p>Phone: {{order.phone}}</p>
+                    <p>Address: {{order.address}}</p>
+                    <p>City: {{order.city}}</p>
+                    <p>Zip: {{order.zip}}</p>
+                    <p>State: {{order.state}}</p>
+                    <p>Gift: {{order.gift}}</p>
+                    <p>Method: {{order.method}}</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+
+    <script>
+
+        // VUE INSTANCE
+        let webstore = new Vue ({
+            el: '#app',
+            data: {
+                search: "",
+                showProduct: true,
+                order:{
+                    firstName: '',
+                    lastName: '',
+                    phone: '',
+                    address: '',
+                    city: '',
+                    zip: '',
+                    state: '',
+                    method: 'Home',
+                    sendGift: 'Send as a gift',
+                    dontSendGift: 'Do no send as a gift'
+                },
+                states:{
+                    AL: 'Alabama',
+                    AR: 'Arizona',
+                    CA: 'California',
+                    NV: 'Nevada'
+                },
+                sitename: '<strong>After School Club</strong>',
+                products: products,
+                product: {
+                        id: 1,
+                        image: "product.png",
+                        subject: "<strong>Math</strong>",
+                        location: "London",
+                        price: 100,
+                        availableInventory: 10,
+                        rating: 4
+                    },
+                cart: []
+            },
+            methods: {
+                addToCart(product){
+                    this.cart.push(product.id);
+                },
+                showCheckout: function(){
+                    this.showProduct = this.showProduct ? false : true;
+                },
+                submitForm: function(){
+                    {alert('Confirming the order has been submitted!')}
+                },
+                canAddToCart(product) {
+                    return product.availableInventory > this.cartCount(product.id);
+                },
+                cartCount(id){
+                    let count = 0;
+                    for(let i = 0; i < this.cart.length; i++){
+                        if (this.cart[i] === id) {
+                            count++;
+                        }
+                    }
+                    return count;
+                },
+                sortedPriceHigh: function(){
+                    function compare(a,b){
+                        if (a.price > b.price) return -1
+                        if (a.price < b.price) return 1
+                        return 0
+                    }
+                    return this.products.sort(compare)
+                },
+                sortedPriceLow: function(){
+                    function compare(a,b){
+                        if (a.price > b.price) return 1
+                        if (a.price < b.price) return -1
+                        return 0
+                    }
+                    return this.products.sort(compare)
+                },
+                sortedStockHigh: function(){
+                    function compare(a,b){
+                        if (a.availableInventory > b.availableInventory) return -1
+                        if (a.availableInventory < b.availableInventory) return 1
+                        return 0
+                    }
+                    return this.products.sort(compare)
+                },
+                sortedStockLow: function(){
+                    function compare(a,b){
+                        if (a.availableInventory > b.availableInventory) return 1
+                        if (a.availableInventory < b.availableInventory) return -1
+                        return 0
+                    }
+                    return this.products.sort(compare)
+                },
+                sortedRatingsHigh: function(){
+                    function compare(a,b){
+                        if (a.rating > b.rating) return -1
+                        if (a.rating < b.rating) return 1
+                        return 0
+                    }
+                    return this.products.sort(compare)
+                },
+                sortedRatingsLow: function(){
+                    function compare(a,b){
+                        if (a.rating > b.rating) return 1
+                        if (a.rating < b.rating) return -1
+                        return 0
+                    }
+                    return this.products.sort(compare)
+                },
+                NumbersOnly(evt) {
+                    evt = (evt) ? evt : window.event;
+                    var charCode = (evt.which) ? evt.which : evt.keyCode;
+                    if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
+                        evt.preventDefault();;
+                    } else {
+                        return true;
+                    }
+                },
+                LettersOnly(e) {
+                    let char = String.fromCharCode(e.keyCode); // Get the character
+                    if(/^[A-Za-z]+$/.test(char)) return true; // Match with regex 
+                    else e.preventDefault(); // If not match, don't add to input text
+                },
+                itemLeft (product){
+                    return product.availableInventory - this.cartCount(product.id)
+                }
+            },
+            computed: {
+                cartItemCount: function(id){
+                    return this.cart.length || '';
+                },
+                filteredProducts: function(){
+                    return this.products.filter((product) => {
+                        return product.subject.toLowerCase().includes(this.search.toLowerCase());
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+</html>

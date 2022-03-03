@@ -1,0 +1,51 @@
+* {
+    box-sizing: border-box;
+  }
+  #app{
+      text-align: center;
+  }
+  .product {
+    float: left;
+    width: 30%;
+    padding: 10px;
+    margin: 15px;
+    border: 5px solid black;
+  }
+  .checkoutbut {
+    float: right;
+    padding-right: 5%;
+    margin: 1%;
+  }
+  .checkout {
+    border: 5px solid black;
+    margin-top: 2%;
+    width: 100%;
+    text-align: left;
+    padding: 2%;
+    font-size: 20px;
+  }
+  .sort {
+    padding-right: 62%;
+    display: inline-block;
+  }
+  .order {
+    border: 5px solid black;
+    margin-top: 1%;
+    width: 100%;
+    text-align: left;
+    padding: 2%;
+    background-color: rgb(216, 215, 215);
+  }
+  #orderbut {
+    font-size: 20px;
+  }
+  input {
+      border-radius: 4px;
+      font-size: 18px;
+  }
+  #search {
+    margin: 1%;
+    font-size: 20px;
+    width: 80%;
+    float: left;
+  }
