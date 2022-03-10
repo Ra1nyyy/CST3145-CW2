@@ -1,0 +1,43 @@
+[{
+  "_id": {
+    "$oid": "6229cd3d8a5ab213352c15ad"
+  },
+  "firstname": "Alex",
+  "lastname": "Navarra",
+  "phone": "123"
+},{
+  "_id": {
+    "$oid": "6229cd598a5ab213352c15ae"
+  },
+  "firstname": "Damian",
+  "lastname": "Lilard",
+  "phone": "321"
+},{
+  "_id": {
+    "$oid": "6229cd688a5ab213352c15af"
+  },
+  "firstname": "Jonny",
+  "lastname": "Bravo",
+  "phone": "456"
+},{
+  "_id": {
+    "$oid": "6229cd748a5ab213352c15b0"
+  },
+  "firstname": "Beaner",
+  "lastname": "Ballista",
+  "phone": "654"
+},{
+  "_id": {
+    "$oid": "6229cd848a5ab213352c15b1"
+  },
+  "firstname": "JJ",
+  "lastname": "Thompson",
+  "phone": "789"
+},{
+  "_id": {
+    "$oid": "6229cd928a5ab213352c15b2"
+  },
+  "firstname": "Michael",
+  "lastname": "Stool",
+  "phone": "987"
+}]

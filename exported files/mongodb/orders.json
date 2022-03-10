@@ -1,0 +1,33 @@
+[{
+  "_id": {
+    "$oid": "6229ce2f8a5ab213352c15b3"
+  },
+  "name": "Michael",
+  "phone": "987",
+  "subject_id": "Array",
+  "space": 3
+},{
+  "_id": {
+    "$oid": "6229ce608a5ab213352c15b4"
+  },
+  "name": "Chelsea",
+  "phone": "321",
+  "subject_id": "Array",
+  "space": 7
+},{
+  "_id": {
+    "$oid": "6229ce6b8a5ab213352c15b5"
+  },
+  "name": "Angel",
+  "phone": "765",
+  "subject_id": "Array",
+  "space": 9
+},{
+  "_id": {
+    "$oid": "6229ce7b8a5ab213352c15b6"
+  },
+  "name": "JJ",
+  "phone": "456",
+  "subject_id": "Array",
+  "space": 2
+}]
