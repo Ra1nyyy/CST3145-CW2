@@ -4,6 +4,7 @@ const cors = require('cors')
 const req = require('express/lib/request')
 const res = require('express/lib/response')
 
+// REQUIRED MODULES FOR STATIC FILE
 var path = require("path")
 var fs = require("fs")
 
@@ -16,9 +17,11 @@ app.use(function (req, res, next) {
     console.log("Request Date: " + new Date());
     next();
 });
+
+// STATIC FILE SERVER MIDDLEWARE
 app.use(function (req, res, next) {
     // Uses path.join to find the path where the file should be
-    var filePath = path.join(__dirname, 'static', req.url);
+    var filePath = path.join(__dirname, "static", req.url);
     // Built-in fs.stat gets info about a file
     fs.stat(filePath, function (err, fileInfo) {
         if (err) {
